@@ -1,6 +1,6 @@
 import os
 
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
 
 from app.services.openai_service import get_embedding
 
@@ -22,7 +22,13 @@ def embed_chunks_and_upload_to_pinecone(chunks, index_name):
 
     print("\nCreating a new index: ", index_name)
     pc.create_index(name=index_name,
-                    dimension=EMBEDDING_DIMENSION, metric='cosine')
+                    dimension=EMBEDDING_DIMENSION,
+                    metric='cosine',
+                    spec=ServerlessSpec(
+                        cloud='aws',
+                        region='us-east-1'
+                    )
+                    )
 
     index = pc.Index(index_name)
     # print(index.describe_index_stats())
