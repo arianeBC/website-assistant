@@ -44,7 +44,7 @@ function ChatInterface() {
         let accumulatedAnswer = ""
 
         while (true) {
-            var {value, done} = await reader.read();
+            let {value, done} = await reader.read();
             if (done) break;
             accumulatedAnswer += value;
             setMessages(currentHistory => {

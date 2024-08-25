@@ -119,14 +119,13 @@ input[type="text"] {
 }
 
 .bot-message {
-    background-color: #f0f0f0;
     text-align: left;
     background-color: lightgray;
 }
 
 code {
     font-family: 'Arial', sans-serif;
-    white-space : pre-wrap !important;
+    white-space: pre-wrap !important;
 }
 
 .user-message {
