@@ -1,6 +1,8 @@
+import json
+
 import requests
 import sseclient
-from flask import request, jsonify, Response, stream_with_context, json
+from flask import request, Response, stream_with_context, jsonify
 
 from app.services import openai_service, pinecone_service, scraping_service
 from app.utils.helper_functions import chunk_text
@@ -29,9 +31,9 @@ def handle_query():
             if event.data != '[DONE]':
                 try:
                     text = json.loads(event.data)['choices'][0]['delta']['content']
-                    yield (text)
-                except:
-                    yield ('')
+                    yield text.encode('utf-8')
+                except (KeyError, json.JSONDecodeError):
+                    yield b''  # Return an empty byte string in case of an error
 
     # Return the streamed response from the LLM to the frontend
     return Response(stream_with_context(generate()))
